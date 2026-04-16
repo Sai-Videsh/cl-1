@@ -20,7 +20,6 @@ const directionsUrl =
   "https://www.google.com/maps/place/Tabun+Chai/@13.2053398,78.9045259,17z/data=!4m16!1m9!3m8!1s0x3bad655ad323fa63:0x52023a4eb52eb34b!2sTabun+Chai!8m2!3d13.2053398!4d78.9045014!9m1!1b1!16s%2Fg%2F11ys7qvgyz!3m5!1s0x3bad655ad323fa63:0x52023a4eb52eb34b!8m2!3d13.2053398!4d78.9045014!16s%2Fg%2F11ys7qvgyz?entry=ttu&g_ep=EgoyMDI2MDQxMi4wIKXMDSoASAFQAw%3D%3D";
 const whatsappUrl = "https://wa.me/919999999999?text=Hi%20Tabun%20Chai%2C%20I%20want%20to%20order.";
 
-
 export function HeroSection() {
   const [isMobile, setIsMobile] = useState<boolean>(() => window.innerWidth < 768);
   const [activeTrend, setActiveTrend] = useState(0);
@@ -60,7 +59,7 @@ export function HeroSection() {
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
 
-    const handleChange = (event) => {
+    const handleChange = (event: MediaQueryListEvent) => {
       setIsMobile(event.matches);
       setVideoFailed(false);
     };
@@ -192,12 +191,14 @@ export function HeroSection() {
                   href={directionsUrl}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={() => { if (typeof window !== 'undefined' && window.gtag) window.gtag('event', 'direction_click', { event_category: 'engagement', event_label: 'maps_open', value: 1 }); }}
                   className="inline-flex h-11 min-w-[120px] items-center justify-center rounded-full border border-amber-100/24 bg-amber-100/11 px-3 text-sm font-semibold text-amber-50 backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:bg-amber-100/18"
                 >
                   <span className="relative z-10">Get Directions</span>
                 </a>
                 <a
                   href="#menu"
+                  onClick={() => { if (typeof window !== 'undefined' && window.gtag) window.gtag('event', 'menu_click', { event_category: 'engagement', event_label: 'menu_navigate', value: 1 }); }}
                   className="inline-flex h-11 min-w-[120px] items-center justify-center rounded-full border border-white/18 bg-white/7 px-3 text-sm font-semibold text-amber-50 backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:bg-white/12"
                 >
                   Go to Menu

@@ -44,12 +44,24 @@ const getCrowdSubline = (hour: number) => {
   return "Calmer pace, easy seating, ideal for slow sips.";
 };
 
-const getOpenTargetDate = (now: Date) => {
+const getOfferEndTime = (now: Date, offerId: string) => {
   const target = new Date(now);
-  target.setHours(7, 0, 0, 0);
-  if (now.getHours() >= 23) {
-    target.setDate(target.getDate() + 1);
+  target.setSeconds(0, 0);
+  
+  switch (offerId) {
+    case "morning-kickstart":
+      target.setHours(10, 0, 0, 0);
+      break;
+    case "tea-time-pair":
+      target.setHours(18, 0, 0, 0);
+      break;
+    case "after-8-special":
+      target.setHours(23, 0, 0, 0);
+      break;
+    default:
+      target.setHours(23, 0, 0, 0);
   }
+  
   return target;
 };
 
@@ -82,22 +94,20 @@ export function TimeOffersCrowdSection() {
   const view = useMemo(() => {
     const hour = now.getHours();
     const isBusinessTime = hour >= 7 && hour < 23;
-    const activeOffer = offers[Math.floor(now.getMinutes() / 5) % offers.length];
+    
+    // Select active offer based on time of day
+    let activeOffer: Offer;
+    if (hour >= 7 && hour < 10) {
+      activeOffer = offers[0]; // Morning Kickstart (7-10 AM)
+    } else if (hour >= 10 && hour < 18) {
+      activeOffer = offers[1]; // Tea Time Pair (10 AM - 6 PM)
+    } else {
+      activeOffer = offers[2]; // After 8 PM Special (6-11 PM)
+    }
 
     if (isBusinessTime) {
-      const resetAt = new Date(now);
-      resetAt.setSeconds(0, 0);
-      const currentMinutes = now.getMinutes();
-      const nextFive = Math.floor(currentMinutes / 5) * 5 + 5;
-
-      if (nextFive >= 60) {
-        resetAt.setHours(resetAt.getHours() + 1);
-        resetAt.setMinutes(0, 0, 0);
-      } else {
-        resetAt.setMinutes(nextFive, 0, 0);
-      }
-
-      const countdown = formatCountdown(resetAt.getTime() - now.getTime());
+      const offerEndTime = getOfferEndTime(now, activeOffer.id);
+      const countdown = formatCountdown(offerEndTime.getTime() - now.getTime());
 
       return {
         isBusinessTime,
@@ -107,7 +117,12 @@ export function TimeOffersCrowdSection() {
       };
     }
 
-    const openAt = getOpenTargetDate(now);
+    // Shop closed - show next opening time (7 AM)
+    const openAt = new Date(now);
+    openAt.setHours(7, 0, 0, 0);
+    if (now.getHours() >= 23) {
+      openAt.setDate(openAt.getDate() + 1);
+    }
     const countdown = formatCountdown(openAt.getTime() - now.getTime());
 
     return {
@@ -120,8 +135,8 @@ export function TimeOffersCrowdSection() {
 
   const bannerMessages = [
     view.mode === "live"
-      ? `Live refresh cycle • Resets in ${view.countdown}`
-      : `Shop opens in ${view.countdown} • 5-minute cycles start at 7:00 AM`,
+      ? `Today's Offer: ${view.activeOffer.title} • Ends in ${view.countdown}`
+      : `Shop opens in ${view.countdown} • Morning Kickstart (10% OFF) starts at 7:00 AM`,
     `${getCrowdLabel(now.getHours())} • ${getCrowdSubline(now.getHours())}`,
     "Fresh batches move fast during peak windows. Quick order helps skip queue time.",
   ];
@@ -175,12 +190,17 @@ export function TimeOffersCrowdSection() {
 
           <div className="rounded-[20px] border border-amber-100/24 bg-[#f7d8b9]/10 px-4 py-4 text-center lg:text-right">
             <p className="menu-sketch text-xs uppercase tracking-[0.2em] text-[#ffd7b7]/84">
-              {view.mode === "live" ? "5 Min Refresh Countdown" : "Opens In"}
+              {view.mode === "live" ? "Today's Offer" : "Opens In"}
             </p>
-            <p className="menu-sketch mt-2 text-4xl text-[#fff1e2] sm:text-5xl">{view.countdown}</p>
+            <p className="menu-sketch mt-2 text-2xl text-[#fff1e2] sm:text-3xl">
+              {view.mode === "live" ? view.activeOffer.title : view.countdown}
+            </p>
+            <p className="menu-sketch mt-1 text-3xl text-[#ffb178] sm:text-4xl">
+              {view.mode === "live" ? view.countdown : "Morning Kickstart (10% OFF)"}
+            </p>
             <p className="mt-1 text-xs text-[#ffdcbc]/82">
               {view.mode === "live"
-                ? `${offerForWhatsApp.title} • auto-resets every 5 minutes during business hours`
+                ? "Hurry up before it ends!"
                 : "Business time: 7:00 AM - 11:00 PM"}
             </p>
           </div>
@@ -191,16 +211,9 @@ export function TimeOffersCrowdSection() {
             <span className="rounded-full border border-white/18 bg-white/8 px-3 py-1">Daily: 7:00 AM - 11:00 PM</span>
             <span className="rounded-full border border-white/18 bg-white/8 px-3 py-1">Peak: 8-11 AM, 5-10 PM</span>
             <span className="rounded-full border border-white/18 bg-white/8 px-3 py-1">260+ Happy Customers</span>
+            <span className="rounded-full border border-white/18 bg-white/8 px-3 py-1">Avg Prep: 4-6 mins</span>
+            <span className="rounded-full border border-white/18 bg-white/8 px-3 py-1">Premium Quality</span>
           </div>
-
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="menu-sketch inline-flex h-11 items-center justify-center rounded-full border border-emerald-200/36 bg-emerald-200/18 px-5 text-xs uppercase tracking-[0.14em] text-emerald-100 transition-all hover:-translate-y-0.5"
-          >
-            Claim on WhatsApp
-          </a>
         </div>
       </motion.div>
     </section>

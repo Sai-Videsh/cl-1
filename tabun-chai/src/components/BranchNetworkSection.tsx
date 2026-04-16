@@ -5,8 +5,7 @@ const currentBranch = {
   address:
     "Balaji Colony, Bengaluru - Tirupati Hwy, Bangarupalem to Bangalore road, Venkatagiri, Andhra Pradesh 517416",
   photos: ["/media/current-branch-main.png"],
-  mapUrl:
-    "https://www.google.com/maps/search/?api=1&query=Balaji+Colony+Bengaluru+Tirupati+Hwy+Bangarupalem+Venkatagiri+Andhra+Pradesh+517416",
+  mapUrl: "https://maps.app.goo.gl/urEWdyu7566XmHnG8",
 };
 
 const otherBranches = [
@@ -15,24 +14,28 @@ const otherBranches = [
     status: "Active",
     address: "JCCC+Q8 Bairagi patteda, Tirupati, Andhra Pradesh",
     note: "Urban neighborhood stop with fast takeaway and evening chai flow.",
-    mapUrl:
-      "https://www.google.com/maps/search/?api=1&query=JCCC%2BQ8+Bairagi+patteda%2C+Tirupati%2C+Andhra+Pradesh",
+    mapUrl: "https://maps.app.goo.gl/imBa5AFLPfbzYsNk9",
   },
   {
     name: "Tiruchanur",
     status: "Active",
     address: "Revenue Colony, Tiruchanur, Andhra Pradesh 517503",
     note: "Steady local crowd branch focused on warm service and repeat cups.",
-    mapUrl:
-      "https://www.google.com/maps/search/?api=1&query=Revenue+Colony%2C+Tiruchanur%2C+Andhra+Pradesh+517503",
+    mapUrl: "https://maps.app.goo.gl/YiCk9Uc6zGfJYF3o6",
   },
   {
     name: "Greamspet, Chittoor",
     status: "Active",
     address: "4-421, CB Rd, opp. SBI bank, Greamspet, Chittoor, Andhra Pradesh 517002",
     note: "Roadside-ready branch for quick pit-stop chai and snack pairings.",
-    mapUrl:
-      "https://www.google.com/maps/search/?api=1&query=4-421%2C+CB+Rd%2C+opp.+SBI+bank%2C+Greamspet%2C+Chittoor%2C+Andhra+Pradesh+517002",
+    mapUrl: "https://maps.app.goo.gl/qehjkoQYSn1NWjbu7",
+  },
+  {
+    name: "Kadapa",
+    status: "Active",
+    address: "Kadapa, Andhra Pradesh",
+    note: "Newest addition to the Tabun Chai family, serving authentic chai flavors.",
+    mapUrl: "https://maps.app.goo.gl/8nTWnBo5tCVMb8Gn7",
   },
 ];
 
@@ -100,6 +103,7 @@ export function BranchNetworkSection() {
                 href={currentBranch.mapUrl}
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => { if (typeof window !== 'undefined' && window.gtag) window.gtag('event', 'location_click', { event_category: 'engagement', event_label: 'check_location_main', value: 1 }); }}
                 className="mt-5 inline-flex h-11 items-center justify-center rounded-full border border-white/24 bg-white/8 px-6 text-xs font-semibold uppercase tracking-[0.14em] text-[#fff4e7] transition-colors hover:bg-white/14"
               >
                 Check Location
@@ -149,6 +153,7 @@ export function BranchNetworkSection() {
                     href={branch.mapUrl}
                     target="_blank"
                     rel="noreferrer"
+                    onClick={() => { if (typeof window !== 'undefined' && window.gtag) window.gtag('event', 'location_click', { event_category: 'engagement', event_label: 'check_location_' + branch.name, value: 1 }); }}
                     className="mt-3 inline-flex h-9 items-center justify-center rounded-full border border-white/24 bg-white/10 px-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#fff1e2] transition-colors hover:bg-white/16"
                   >
                     Check Location

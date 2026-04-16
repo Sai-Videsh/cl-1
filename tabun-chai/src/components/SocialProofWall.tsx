@@ -15,6 +15,15 @@ type Review = {
 const googleMapsReviewsUrl =
   "https://www.google.com/maps/search/?api=1&query=Tabun+Chai+Tirupati";
 
+const reviewUrls: Record<string, string> = {
+  "poorna chandra": "https://maps.app.goo.gl/KuRrQYCeTxuTFAGN9",
+  "Vakada Jhansi": "https://maps.app.goo.gl/y3UhJakCnGqLF5k39",
+  "Gopinadh Gali": "https://maps.app.goo.gl/yqs4NqxXDCQQbBtx8",
+  "Pavan Sagar": "https://maps.app.goo.gl/UEycmjyVEHUXusCK7",
+  "Poojitha Reddy": "https://maps.app.goo.gl/oxoLD1NLWLa9WX2r5",
+  "Vamsi Naidu": "https://maps.app.goo.gl/NL4Z6XxFunbL7bRGA",
+};
+
 const featuredReviews: Review[] = [
   {
     name: "poorna chandra",
@@ -22,7 +31,7 @@ const featuredReviews: Review[] = [
     when: "2 months ago",
     rating: 5,
     source: "Google",
-    sourceUrl: googleMapsReviewsUrl,
+    sourceUrl: reviewUrls["poorna chandra"],
     quote: "Foods great, nice place to chill",
   },
   {
@@ -31,7 +40,7 @@ const featuredReviews: Review[] = [
     when: "a month ago",
     rating: 5,
     source: "Google",
-    sourceUrl: googleMapsReviewsUrl,
+    sourceUrl: reviewUrls["Vakada Jhansi"],
     quote: "Momos here tastes good 👍 …",
   },
   {
@@ -40,7 +49,7 @@ const featuredReviews: Review[] = [
     when: "a month ago",
     rating: 5,
     source: "Google",
-    sourceUrl: googleMapsReviewsUrl,
+    sourceUrl: reviewUrls["Gopinadh Gali"],
     quote: "Very nice taste and preferable for quick relax..",
   },
   {
@@ -49,9 +58,9 @@ const featuredReviews: Review[] = [
     when: "2 months ago",
     rating: 5,
     source: "Google",
-    sourceUrl: googleMapsReviewsUrl,
+    sourceUrl: reviewUrls["Pavan Sagar"],
     quote:
-      "Some places don’t just serve chai they serve comfort This chai warmed my heart as much as my soul. Absolutely loved it More",
+      "Some places don't just serve chai they serve comfort This chai warmed my heart as much as my soul. Absolutely loved it More",
   },
   {
     name: "Poojitha Reddy",
@@ -60,7 +69,7 @@ const featuredReviews: Review[] = [
     badge: "New",
     rating: 5,
     source: "Google",
-    sourceUrl: googleMapsReviewsUrl,
+    sourceUrl: reviewUrls["Poojitha Reddy"],
     quote:
       "Nice Cafe, i really enjoyed the atmosphere of this cafe and i never miss the famous tabun chai taste whenever i visit More",
   },
@@ -71,7 +80,7 @@ const featuredReviews: Review[] = [
     badge: "New",
     rating: 5,
     source: "Google",
-    sourceUrl: googleMapsReviewsUrl,
+    sourceUrl: reviewUrls["Vamsi Naidu"],
     quote:
       "The pace is very good,\nwith green environment, peaceful air,\nDelicious food must try everyone.\nFood:…",
   },
@@ -198,6 +207,7 @@ export function SocialProofWall() {
                         href={review.sourceUrl}
                         target="_blank"
                         rel="noreferrer"
+                        onClick={() => { if (typeof window !== 'undefined' && window.gtag) window.gtag('event', 'review_click', { event_category: 'engagement', event_label: 'review_' + review.name.replace(/\s+/g, '_').toLowerCase(), value: 1 }); }}
                         className="menu-sketch inline-flex h-10 items-center justify-center rounded-full border border-white/28 bg-white/10 px-4 text-sm uppercase tracking-[0.14em] text-[#fff1e2] transition-colors hover:bg-white/16"
                       >
                         Open Review

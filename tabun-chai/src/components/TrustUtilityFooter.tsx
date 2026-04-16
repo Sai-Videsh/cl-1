@@ -1,5 +1,6 @@
-const instagramUrl = "https://www.instagram.com";
-const justdialUrl = "https://www.justdial.com/Tirupati/Tabun-Chai";
+const instagramUrl = "https://www.instagram.com/tabun.chai/";
+const justdialUrl = "https://jsdl.in/DT-99XLMPNDV1K";
+const restaurantGuruUrl = "https://restaurant-guru.in/Tabun-Chai-Tirupati";
 const phoneNumber = "+91 98765 43210";
 const shopKeeperName = "S. Ramesh";
 
@@ -15,9 +16,21 @@ export function TrustUtilityFooter() {
 
         <div className="flex flex-wrap items-center gap-4 md:justify-end">
           <a
+            href={restaurantGuruUrl}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => { if (typeof window !== 'undefined' && window.gtag) window.gtag('event', 'social_click', { event_category: 'engagement', event_label: 'restaurant_guru', value: 1 }); }}
+            className="footer-lucida flex items-center justify-center text-[#fff] transition-all hover:scale-110"
+            aria-label="Restaurant Guru"
+          >
+            {/* Restaurant Guru SVG - chef hat icon */}
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 6c-4 0-7 2-7 5 0 1 .5 2 1.5 2.5v7c0 2 2.5 3.5 5.5 3.5s5.5-1.5 5.5-3.5v-7c1-.5 1.5-1.5 1.5-2.5 0-3-3-5-7-5z" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M12 20v2c0 2 2 4 4 4s4-2 4-4v-2" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </a>
+          <a
             href={justdialUrl}
             target="_blank"
             rel="noreferrer"
+            onClick={() => { if (typeof window !== 'undefined' && window.gtag) window.gtag('event', 'social_click', { event_category: 'engagement', event_label: 'justdial', value: 1 }); }}
             className="footer-lucida flex items-center justify-center text-[#fff] transition-all hover:scale-110"
             aria-label="Justdial"
           >
@@ -28,6 +41,7 @@ export function TrustUtilityFooter() {
             href={instagramUrl}
             target="_blank"
             rel="noreferrer"
+            onClick={() => { if (typeof window !== 'undefined' && window.gtag) window.gtag('event', 'social_click', { event_category: 'engagement', event_label: 'instagram', value: 1 }); }}
             className="footer-lucida flex items-center justify-center text-[#fff] transition-all hover:scale-110"
             aria-label="Instagram"
           >
@@ -36,6 +50,7 @@ export function TrustUtilityFooter() {
           </a>
           <a
             href={`tel:${phoneNumber.replace(/\s+/g,"")}`}
+            onClick={() => { if (typeof window !== 'undefined' && window.gtag) window.gtag('event', 'call_click', { event_category: 'engagement', event_label: 'phone_call', value: 1 }); }}
             className="footer-lucida flex items-center justify-center text-[#fff] transition-all hover:scale-110"
             aria-label="Phone"
           >

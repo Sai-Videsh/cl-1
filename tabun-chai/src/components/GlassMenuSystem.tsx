@@ -84,9 +84,8 @@ export function GlassMenuSystem() {
       >
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="menu-sketch text-sm tracking-[0.24em] text-[#ffd8b6]/88">GLASS MENU SYSTEM</p>
-            <h2 className="menu-sketch mt-2 text-4xl font-semibold tracking-wide text-[#fff0df] sm:text-5xl">
-              Vertical Orbit Menu
+            <h2 className="menu-sketch text-4xl font-semibold tracking-wide text-[#fff0df] sm:text-5xl">
+              Orbit Menu
             </h2>
           </div>
 
@@ -117,12 +116,21 @@ export function GlassMenuSystem() {
               <div className="absolute inset-0 rounded-full border border-white/16 bg-[radial-gradient(circle,rgba(255,229,200,0.08)_0%,rgba(255,190,136,0.05)_38%,rgba(17,8,4,0)_72%)]" />
               <div className="absolute inset-[12%] rounded-full border border-white/12" />
 
+              {/* Mobile hover/tap compatibility */}
               {orbitItems.map((item, index) => {
                 const angleDeg = orbitPhase + (360 / orbitItems.length) * index;
                 const angleRad = (angleDeg * Math.PI) / 180;
                 const x = Math.sin(angleRad) * orbitRadiusX;
                 const y = -Math.cos(angleRad) * orbitRadiusY;
                 const tilt = Math.sin((angleRad * 2) / 3) * 3;
+                const [isActive, setIsActive] = useState(false);
+                // Detect touch device
+                const isTouch = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+
+                // Handler for tap/click
+                const handleTap = () => {
+                  if (isTouch) setIsActive((prev) => !prev);
+                };
 
                 return (
                   <motion.article
@@ -130,12 +138,14 @@ export function GlassMenuSystem() {
                     initial={{ opacity: 0, scale: 0.92 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true, amount: 0.15 }}
-                    animate={{ x, y, rotate: tilt }}
-                    whileHover={{ y: y - 10, scale: 1.05, rotate: tilt * 0.6 }}
+                    animate={isTouch && isActive ? { x, y: y - 10, scale: 1.05, rotate: tilt * 0.6 } : { x, y, rotate: tilt }}
+                    whileHover={isTouch ? undefined : { y: y - 10, scale: 1.05, rotate: tilt * 0.6 }}
                     transition={{ type: "tween", duration: 0.75, ease: "linear" }}
                     className="group/menu absolute left-1/2 top-1/2 z-10 w-[156px] -translate-x-1/2 -translate-y-1/2 hover:z-50"
+                    onClick={handleTap}
+                    style={{ touchAction: 'manipulation' }}
                   >
-                    <div className="rounded-[20px] border border-white/25 bg-[linear-gradient(145deg,rgba(255,236,215,0.2),rgba(57,31,18,0.68))] px-3 py-2 text-center shadow-[0_12px_24px_rgba(12,6,2,0.36)] backdrop-blur-xl transition-transform transition-colors group-hover/menu:bg-[linear-gradient(145deg,rgba(255,240,220,0.28),rgba(66,36,21,0.78))] group-hover/menu:rotate-2">
+                    <div className={`rounded-[20px] border border-white/25 bg-[linear-gradient(145deg,rgba(255,236,215,0.2),rgba(57,31,18,0.68))] px-3 py-2 text-center shadow-[0_12px_24px_rgba(12,6,2,0.36)] backdrop-blur-xl transition-transform transition-colors ${isTouch && isActive ? 'bg-[linear-gradient(145deg,rgba(255,240,220,0.28),rgba(66,36,21,0.78))] rotate-2' : ''} group-hover/menu:bg-[linear-gradient(145deg,rgba(255,240,220,0.28),rgba(66,36,21,0.78))] group-hover/menu:rotate-2` }>
                       <p className="menu-sketch truncate text-[12px] uppercase tracking-[0.12em] text-[#ffd7b3]/84">{item.tag}</p>
                       <p className="menu-sketch mt-0.5 truncate text-lg leading-tight text-[#fff2e3]">{item.name}</p>
                       <p className="menu-sketch mt-0.5 text-xl leading-none text-[#ffd796]">Rs.{item.price}</p>

@@ -190,7 +190,7 @@ export function TimeOffersCrowdSection() {
           <div className="flex flex-wrap items-center gap-2 text-xs text-[#ffe0c4]/84">
             <span className="rounded-full border border-white/18 bg-white/8 px-3 py-1">Daily: 7:00 AM - 11:00 PM</span>
             <span className="rounded-full border border-white/18 bg-white/8 px-3 py-1">Peak: 8-11 AM, 5-10 PM</span>
-            <span className="rounded-full border border-white/18 bg-white/8 px-3 py-1">Avg prep: 4-6 mins</span>
+            <span className="rounded-full border border-white/18 bg-white/8 px-3 py-1">260+ Happy Customers</span>
           </div>
 
           <a

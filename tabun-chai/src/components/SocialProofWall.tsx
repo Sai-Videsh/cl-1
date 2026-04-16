@@ -237,17 +237,18 @@ export function SocialProofWall() {
             let opacity = 1;
             let zIndex = 20;
 
+            // All cards (except center) tilt to the right for alignment
             if (offset === -2) {
               x = -198;
               y = 18;
-              rotate = -18;
+              rotate = 18;
               scale = 0.8;
               opacity = 0.66;
               zIndex = 10;
             } else if (offset === -1) {
               x = -104;
               y = 8;
-              rotate = -10;
+              rotate = 10;
               scale = 0.9;
               opacity = 0.86;
               zIndex = 15;

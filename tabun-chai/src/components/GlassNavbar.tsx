@@ -128,65 +128,78 @@ export function GlassNavbar({ activeItem, onItemSelect }: GlassNavbarProps) {
         </div>
       </header>
 
-      <div className="fixed left-3 top-1/2 z-50 -translate-y-1/2 md:hidden">
-        <div className="w-fit max-h-[80vh] overflow-y-auto rounded-[30px] border border-white/35 bg-[#f8ecde]/28 p-2 shadow-[0_16px_40px_rgba(25,12,6,0.36)] backdrop-blur-2xl">
-          <button
-            type="button"
-            onClick={() => setMobileExpanded((value) => !value)}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/40 bg-white/10 text-[#fff2e2]"
-            aria-expanded={mobileExpanded}
-            aria-label="Toggle mobile navigation"
-          >
-            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M4 7h16M4 12h16M4 17h10" strokeLinecap="round" />
-            </svg>
-          </button>
+      {/* Floating Sidebar Button (left, upper-middle) and vertical sidebar */}
+      <div className="fixed left-3 top-1/4 z-50 md:hidden">
+        <button
+          type="button"
+          onClick={() => setMobileExpanded((value) => !value)}
+          className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-[#e7d3c0]/60 shadow-lg text-[#a07c5b] opacity-80 backdrop-blur-xl transition-all hover:scale-105 focus:outline-none"
+          aria-expanded={mobileExpanded}
+          aria-label="Open navigation menu"
+        >
+          <svg className="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+            <circle cx="12" cy="12" r="10" stroke="#a07c5b" strokeWidth="2" fill="#f6e7d6" fillOpacity="0.7" />
+            <path d="M7 12h10M7 16h10M7 8h10" stroke="#a07c5b" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </button>
 
-          <div className="mt-2 flex flex-col gap-2">
-            {navItems.map((item) => (
-              <a
-                key={item.id}
-                href={menuAnchors[item.id]}
-                onClick={() => {
-                  onItemSelect(item.id);
-                  setMobileExpanded(false);
-                }}
-                className="group relative"
-                aria-label={item.label}
-              >
-                {activeItem === item.id ? (
-                  <motion.span
-                    layoutId="mobile-active-pill"
-                    className="absolute inset-0 rounded-full border border-white/50 bg-white/24"
-                    transition={{ type: "spring", stiffness: 320, damping: 32 }}
-                  />
-                ) : null}
-
-                <div className="relative flex h-11 items-center rounded-full px-3 text-[#fff2e2]">
-                  <span className="inline-flex h-7 w-7 items-center justify-center">{item.icon}</span>
-
-                  <AnimatePresence initial={false}>
-                    {mobileExpanded ? (
+        <AnimatePresence>
+          {mobileExpanded && (
+            <motion.div
+              initial={{ opacity: 0, x: -60 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -60 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              className="fixed left-3 top-1/4 z-50 w-fit max-h-[80vh] overflow-y-auto rounded-[30px] border border-white/35 bg-[#f8ecde]/28 p-2 shadow-[0_16px_40px_rgba(25,12,6,0.36)] backdrop-blur-2xl"
+              style={{ minWidth: 64 }}
+            >
+              <div className="flex flex-col gap-2">
+                {navItems.map((item) => (
+                  <a
+                    key={item.id}
+                    href={menuAnchors[item.id]}
+                    onClick={() => {
+                      onItemSelect(item.id);
+                      setMobileExpanded(false);
+                    }}
+                    className="group relative"
+                    aria-label={item.label}
+                  >
+                    {activeItem === item.id ? (
                       <motion.span
-                        initial={{ width: 0, opacity: 0 }}
-                        animate={{ width: "auto", opacity: 1 }}
-                        exit={{ width: 0, opacity: 0 }}
-                        transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="ml-2 overflow-hidden whitespace-nowrap pr-2 text-xs font-semibold uppercase tracking-[0.2em]"
-                      >
-                        {item.label}
-                      </motion.span>
+                        layoutId="mobile-active-pill"
+                        className="absolute inset-0 rounded-full border border-white/50 bg-white/24"
+                        transition={{ type: "spring", stiffness: 320, damping: 32 }}
+                      />
                     ) : null}
-                  </AnimatePresence>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
+
+                    <div className="relative flex h-11 items-center rounded-full px-3 text-[#7a4a1a]">
+                      <span className="inline-flex h-7 w-7 items-center justify-center">{item.icon}</span>
+                      <AnimatePresence initial={false}>
+                        {mobileExpanded ? (
+                          <motion.span
+                            initial={{ width: 0, opacity: 0 }}
+                            animate={{ width: "auto", opacity: 1 }}
+                            exit={{ width: 0, opacity: 0 }}
+                            transition={{ duration: 0.2, ease: "easeOut" }}
+                            className="ml-2 overflow-hidden whitespace-nowrap pr-2 text-xs font-semibold uppercase tracking-[0.2em]"
+                          >
+                            {item.label}
+                          </motion.span>
+                        ) : null}
+                      </AnimatePresence>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
-      <div className="fixed right-3 top-4 z-50 rounded-full border border-white/35 bg-[#f8ecde]/24 px-4 py-2 text-xs font-semibold uppercase tracking-[0.17em] text-[#fff2e2] shadow-[0_12px_32px_rgba(19,9,5,0.35)] backdrop-blur-xl md:hidden">
-        {activeLabel}
+      <div className="fixed right-3 top-4 z-50 flex items-center gap-2 rounded-full border-2 border-white/60 bg-[#f8ecde]/32 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.17em] text-[#fff2e2] shadow-[0_12px_32px_rgba(19,9,5,0.35)] backdrop-blur-xl md:hidden">
+        <img src="/tabun-logo.png" alt="Tabun Chai logo" className="h-9 w-9 rounded-full object-cover" />
+        <span className="navbar-brand-bushi text-lg font-bold tracking-wide text-white">Tabun Chai</span>
       </div>
     </>
   );

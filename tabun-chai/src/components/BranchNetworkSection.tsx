@@ -38,13 +38,13 @@ const otherBranches = [
 
 export function BranchNetworkSection() {
   return (
-    <section id="branches" className="branch-flow mx-auto max-w-7xl px-1 py-2">
+    <section id="branches" className="branch-flow mx-auto w-full px-4 py-3 sm:px-6 md:px-8 lg:px-12 box-border overflow-x-hidden">
       <motion.div
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.6 }}
-        className="relative p-1 sm:p-2"
+        className="relative overflow-x-hidden"
       >
         <div className="relative">
           <p className="menu-sketch text-sm uppercase tracking-[0.2em] text-[#ffd8b8]/88">
@@ -59,13 +59,13 @@ export function BranchNetworkSection() {
           </p>
         </div>
 
-        <div className="relative mt-8 grid gap-5 lg:grid-cols-[1.12fr_0.88fr] lg:items-stretch">
+        <div className="relative mt-6 w-full flex flex-col gap-4 sm:gap-5 lg:gap-6 lg:flex-row lg:items-stretch lg:justify-between lg:flex-nowrap overflow-x-hidden">
           <motion.article
             initial={{ opacity: 0, x: -22 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.5 }}
-            className="relative overflow-hidden rounded-[32px] border border-amber-100/34 p-6 sm:p-8"
+            className="relative overflow-hidden rounded-[20px] sm:rounded-[24px] lg:rounded-[32px] border border-amber-100/34 p-4 sm:p-5 md:p-6 lg:p-8 mb-3 sm:mb-4 flex-1 lg:flex-1"
           >
             <img
               src={currentBranch.photos[0]}
@@ -75,7 +75,7 @@ export function BranchNetworkSection() {
             <div className="absolute inset-0 bg-gradient-to-b from-[#1a0c05]/42 via-[#1a0c05]/58 to-[#1a0c05]/78" />
             <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(120,72,44,0.34),rgba(53,30,18,0.16)_45%,rgba(78,43,25,0.3)_100%)]" />
 
-            <div className="relative z-10 flex min-h-[360px] flex-col items-center justify-center text-center sm:min-h-[420px]">
+            <div className="relative z-10 flex min-h-[280px] flex-col items-center justify-center text-center sm:min-h-[320px] md:min-h-[380px] lg:min-h-[440px]">
               <motion.p
                 className="menu-sketch relative rounded-full border border-amber-200/60 bg-black/28 px-4 py-1 text-xs uppercase tracking-[0.22em] text-[#ffe4c8]/90 shadow-[0_0_16px_2px_rgba(255,222,180,0.38)]"
                 animate={{
@@ -112,7 +112,7 @@ export function BranchNetworkSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.55 }}
-            className="relative rounded-[30px] border border-white/18 bg-white/7 p-5"
+            className="relative rounded-[16px] sm:rounded-[20px] lg:rounded-[30px] border border-white/18 bg-white/7 p-4 sm:p-4 lg:p-5 mb-3 sm:mb-4 flex-1 lg:flex-1"
           >
             <div className="absolute left-[20px] top-9 h-[calc(100%-72px)] w-px bg-gradient-to-b from-[#ffd6b0]/70 to-transparent" />
 
@@ -120,7 +120,7 @@ export function BranchNetworkSection() {
               Other Branches
             </p>
 
-            <div className="mt-4 space-y-3">
+            <div className="mt-3 space-y-3 sm:mt-4 sm:space-y-4 lg:space-y-5">
               {otherBranches.map((branch, index) => (
                 <motion.article
                   key={branch.name}
@@ -129,7 +129,7 @@ export function BranchNetworkSection() {
                   viewport={{ once: true, amount: 0.25 }}
                   transition={{ delay: index * 0.08, duration: 0.35 }}
                   whileHover={{ scale: 1.015, x: 4 }}
-                  className="relative rounded-[22px] border border-white/18 bg-black/22 p-4"
+                  className="relative rounded-[12px] sm:rounded-[16px] lg:rounded-[22px] border border-white/18 bg-black/22 p-3 sm:p-3 lg:p-4 min-h-[110px] sm:min-h-[120px] lg:min-h-[140px] flex flex-col justify-between"
                 >
                   <motion.span
                     className="absolute left-[-9px] top-1/2 h-4 w-4 -translate-y-1/2 rounded-full border border-amber-200/70 bg-[#ffd5ad]"
@@ -138,13 +138,13 @@ export function BranchNetworkSection() {
                   />
 
                   <div className="flex items-center justify-between gap-3">
-                    <h3 className="menu-sketch text-2xl text-[#fff1e0]">{branch.name}</h3>
+                    <h3 className="menu-sketch text-xl sm:text-2xl text-[#fff1e0]">{branch.name}</h3>
                     <span className="rounded-full border border-amber-100/28 bg-amber-100/12 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#ffe6cf]">
                       {branch.status}
                     </span>
                   </div>
-                  <p className="mt-2 text-xs leading-5 text-[#ffd4b6]/78">{branch.address}</p>
-                  <p className="mt-2 text-sm leading-6 text-[#ffdcbf]/84">{branch.note}</p>
+                  <p className="mt-2 text-xs sm:text-xs leading-5 text-[#ffd4b6]/78">{branch.address}</p>
+                  <p className="mt-1 sm:mt-2 text-xs sm:text-sm leading-5 sm:leading-6 text-[#ffdcbf]/84">{branch.note}</p>
                   <a
                     href={branch.mapUrl}
                     target="_blank"
@@ -159,7 +159,7 @@ export function BranchNetworkSection() {
           </motion.div>
         </div>
 
-        <div className="relative mt-7 overflow-hidden rounded-[22px] border border-white/16 bg-black/20 px-2 py-2">
+        <div className="relative mt-6 overflow-hidden rounded-[14px] border border-white/16 bg-black/20 px-4 py-2 sm:mt-8 sm:rounded-[22px] sm:px-6 sm:py-3 lg:px-12 lg:py-4">
           <div className="branch-mini-marquee flex w-max gap-2">
             {[...otherBranches, currentBranch, ...otherBranches, currentBranch].map((branch, index) => (
               <a

@@ -20,6 +20,7 @@ const directionsUrl =
   "https://www.google.com/maps/place/Tabun+Chai/@13.2053398,78.9045259,17z/data=!4m16!1m9!3m8!1s0x3bad655ad323fa63:0x52023a4eb52eb34b!2sTabun+Chai!8m2!3d13.2053398!4d78.9045014!9m1!1b1!16s%2Fg%2F11ys7qvgyz!3m5!1s0x3bad655ad323fa63:0x52023a4eb52eb34b!8m2!3d13.2053398!4d78.9045014!16s%2Fg%2F11ys7qvgyz?entry=ttu&g_ep=EgoyMDI2MDQxMi4wIKXMDSoASAFQAw%3D%3D";
 const whatsappUrl = "https://wa.me/919999999999?text=Hi%20Tabun%20Chai%2C%20I%20want%20to%20order.";
 
+
 export function HeroSection() {
   const [isMobile, setIsMobile] = useState<boolean>(() => window.innerWidth < 768);
   const [activeTrend, setActiveTrend] = useState(0);
@@ -31,6 +32,18 @@ export function HeroSection() {
   // Animation states for intro
   const [showBlur, setShowBlur] = useState(false);
   const [showMain, setShowMain] = useState(false);
+
+  // Prevent scroll until main glass is shown
+  useEffect(() => {
+    if (!showMain) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showMain]);
 
   useEffect(() => {
     // Hero intro: 3s video, 0.5s blur, then show main
@@ -115,23 +128,22 @@ export function HeroSection() {
       <AnimatePresence>
         {showMain && (
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 70 }}
+            animate={{ opacity: 1, y: 40 }}
+            exit={{ opacity: 0, y: 70 }}
             transition={{ duration: 1.4, ease: "easeOut" }}
-            className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-end px-3 pb-4 pt-24 sm:px-10 sm:pb-14 sm:pt-28 xl:px-14 xl:pb-20"
+            className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-center px-3 pb-4 pt-16 sm:px-10 sm:pb-10 sm:pt-24 xl:px-14 xl:pb-16"
           >
             <motion.div
               initial={{ opacity: 0, y: 26 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className="mx-auto w-full max-w-[52rem] rounded-[28px] border border-white/16 bg-white/3 p-3.5 backdrop-blur-xl shadow-[0_20px_60px_rgba(8,4,2,0.22)] sm:rounded-[34px] sm:p-6"
+              className="mx-auto w-full max-w-[56rem] min-h-[420px] rounded-[32px] border border-white/16 bg-white/3 p-5 backdrop-blur-xl shadow-[0_20px_60px_rgba(8,4,2,0.22)] flex flex-col gap-4 sm:rounded-[38px] sm:p-8"
             >
-              <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                 <p className="hero-badge-italic inline-flex items-center rounded-full border border-amber-100/28 bg-amber-50/6 px-5 py-1.5 text-sm text-amber-50/90 sm:text-base">
                   Dynamic Entry
                 </p>
-
                 <span
                   className={`inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] shadow-[0_0_0_rgba(0,0,0,0)] transition-shadow ${
                     isCrowdLive
@@ -146,11 +158,13 @@ export function HeroSection() {
                 </span>
               </div>
 
-              <h1 className="hero-caption-handwritten mt-5 text-center text-[2.45rem] font-normal leading-[0.98] tracking-tight text-amber-50 sm:text-6xl xl:text-7xl">
+              {/* Title */}
+              <h1 className="hero-caption-handwritten text-center text-[2.7rem] font-normal leading-[1.05] tracking-tight text-amber-50 sm:text-6xl xl:text-7xl">
                 Taste the Pause Between Destinations.
               </h1>
 
-              <div className="mx-auto mt-5 w-full max-w-3xl rounded-2xl border border-white/14 bg-white/4 px-4 py-3 text-center text-sm leading-6 text-amber-50/95 backdrop-blur-md sm:text-base">
+              {/* Scrolling captions */}
+              <div className="mx-auto w-full max-w-3xl rounded-2xl border border-white/14 bg-white/4 px-4 py-3 text-center text-sm leading-6 text-amber-50/95 backdrop-blur-md sm:text-base">
                 <AnimatePresence mode="wait">
                   <motion.p
                     key={trendLines[activeTrend]}
@@ -165,33 +179,30 @@ export function HeroSection() {
                 </AnimatePresence>
               </div>
 
-              <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
-                <span className="hero-offer-chip relative inline-flex h-11 items-center overflow-hidden rounded-full border px-5 text-sm font-semibold text-amber-50/95">
-                  <span className="hero-offer-glint" />
-                  <span className="relative z-10 mr-2 text-[#ffe0b8]">Today's special:</span>
-                  <span className="relative z-10 text-[#fff6e9]">Karak Chai + Masala Fries</span>
-                </span>
+              {/* Today's offer */}
+              <span className="hero-offer-chip relative mx-auto mt-2 inline-flex h-11 items-center overflow-hidden rounded-full border px-5 text-sm font-semibold text-amber-50/95">
+                <span className="hero-offer-glint" />
+                <span className="relative z-10 mr-2 text-[#ffe0b8]">Today's special:</span>
+                <span className="relative z-10 text-[#fff6e9]">Karak Chai + Masala Fries</span>
+              </span>
 
-                <div className="ml-auto flex flex-wrap items-center gap-3">
-                  <a
-                    href={directionsUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex h-11 min-w-[178px] items-center justify-center rounded-full border border-amber-100/24 bg-amber-100/11 px-6 text-sm font-semibold text-amber-50 backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:bg-amber-100/18"
-                  >
-                    <span className="relative z-10">Get Directions</span>
-                  </a>
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex h-11 min-w-[178px] items-center justify-center rounded-full border border-white/18 bg-white/7 px-6 text-sm font-semibold text-amber-50 backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:bg-white/12"
-                  >
-                    Order on WhatsApp
-                  </a>
-                </div>
+              {/* Buttons in a single horizontal line */}
+              <div className="mt-4 flex w-full flex-row items-center justify-center gap-4">
+                <a
+                  href={directionsUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex h-11 min-w-[120px] items-center justify-center rounded-full border border-amber-100/24 bg-amber-100/11 px-3 text-sm font-semibold text-amber-50 backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:bg-amber-100/18"
+                >
+                  <span className="relative z-10">Get Directions</span>
+                </a>
+                <a
+                  href="#menu"
+                  className="inline-flex h-11 min-w-[120px] items-center justify-center rounded-full border border-white/18 bg-white/7 px-3 text-sm font-semibold text-amber-50 backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:bg-white/12"
+                >
+                  Go to Menu
+                </a>
               </div>
-
             </motion.div>
           </motion.div>
         )}

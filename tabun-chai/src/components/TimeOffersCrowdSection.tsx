@@ -11,20 +11,20 @@ type Offer = {
 const offers: Offer[] = [
   {
     id: "morning-kickstart",
-    title: "Morning Kickstart",
-    note: "7 AM to 10 AM comfort cup window",
+    title: "Morning Kickstart - 10% OFF",
+    note: "Going to end at 10 AM. Come fast and grab your comfort cup now.",
     code: "SUNRISE10",
   },
   {
     id: "tea-time-pair",
-    title: "Tea Time Pair",
-    note: "4 PM to 6 PM sip + snack mood",
+    title: "Tea Time Pair - 18% OFF",
+    note: "Limited time offer till 6 PM. Hurry up before it ends.",
     code: "TEATIME18",
   },
   {
     id: "after-8-special",
-    title: "After 8 PM Crowd Special",
-    note: "Night crowd favorite till closing",
+    title: "After 8 PM Crowd Special - 23% OFF",
+    note: "Ending soon at closing time. Come fast and enjoy the night deal.",
     code: "NIGHT23",
   },
 ];

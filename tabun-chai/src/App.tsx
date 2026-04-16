@@ -20,7 +20,7 @@ function App() {
         <HeroSection />
       </div>
 
-      <main className="site-atmosphere relative flex flex-col gap-20 overflow-hidden px-5 pb-16 pt-12 sm:px-10 lg:px-14">
+      <main className="site-atmosphere relative flex flex-col gap-20 overflow-hidden px-5 pb-[10px] pt-12 sm:px-10 lg:px-14">
         <TimeOffersCrowdSection />
 
         <SignatureExperienceSection />

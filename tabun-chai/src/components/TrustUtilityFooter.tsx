@@ -62,7 +62,7 @@ export function TrustUtilityFooter() {
       </div>
 
       <div className="mt-1 border-t border-white/14 pt-1 pb-0 text-center">
-        <p className="text-sm text-[#ffd9ba]/84">Designed and Developed by Videsh. Enjoy the break.</p>
+        <p className="text-sm text-[#ffd9ba]/84">Designed and Developed by Akash &amp; Videsh. Enjoy the break.</p>
       </div>
     </footer>
   );

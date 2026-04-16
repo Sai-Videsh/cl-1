@@ -88,6 +88,13 @@ type GlassNavbarProps = {
   onItemSelect: (id: string) => void;
 };
 
+function scrollToSection(id: string) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
 export function GlassNavbar({ activeItem, onItemSelect }: GlassNavbarProps) {
   const [mobileExpanded, setMobileExpanded] = useState(false);
 
@@ -110,7 +117,11 @@ export function GlassNavbar({ activeItem, onItemSelect }: GlassNavbarProps) {
               <a
                 key={item.id}
                 href={menuAnchors[item.id]}
-                onClick={() => onItemSelect(item.id)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onItemSelect(item.id);
+                  scrollToSection(item.id);
+                }}
                 className="relative inline-flex h-9 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium text-[#fef2e7]/92"
               >
                 {activeItem === item.id ? (
@@ -158,9 +169,11 @@ export function GlassNavbar({ activeItem, onItemSelect }: GlassNavbarProps) {
                   <a
                     key={item.id}
                     href={menuAnchors[item.id]}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.preventDefault();
                       onItemSelect(item.id);
                       setMobileExpanded(false);
+                      scrollToSection(item.id);
                     }}
                     className="group relative"
                     aria-label={item.label}

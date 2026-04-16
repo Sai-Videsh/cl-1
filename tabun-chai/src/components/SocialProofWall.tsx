@@ -151,7 +151,7 @@ export function SocialProofWall() {
           <p className="text-sm text-[#ffd7b6]/84">4.8 / 5 based on 48 Google reviews</p>
         </div>
 
-        <div className="mt-8 px-4 sm:px-8 grid grid-cols-[repeat(auto-fit,minmax(292px,1fr))] gap-8">
+        <div className="mt-8 px-4 sm:px-8 grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8">
           {featuredReviews.map((review, index) => (
             <motion.article
               key={review.name}
@@ -162,7 +162,7 @@ export function SocialProofWall() {
               animate={{ y: [0, -5, 0] }}
               onMouseEnter={() => setHoveredReview(review.name)}
               onMouseLeave={() => setHoveredReview(null)}
-              className="review-flip-shell relative h-[292px] cursor-pointer rounded-[14px] sm:h-[306px]"
+              className="review-flip-shell relative h-[200px] cursor-pointer rounded-[14px] sm:h-[216px]"
             >
               <motion.div
                 animate={{ rotateY: hoveredReview === review.name ? 180 : 0 }}
